@@ -35,3 +35,4 @@ Should the challenge be solved correctly, the server replies with a quote from
 1. Detailed statuses for failed challenges.
 1. Storage to validate the hash.
 1. IP forwarding via Nginx.
+1. Follow the linters’ path.

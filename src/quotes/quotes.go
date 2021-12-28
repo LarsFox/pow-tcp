@@ -2,6 +2,7 @@ package quotes
 
 import (
 	"crypto/rand"
+	"fmt"
 	"math/big"
 )
 
@@ -19,7 +20,7 @@ func NewBook(quotes []string) *Book {
 func (b *Book) Random() ([]byte, error) {
 	n, err := rand.Int(rand.Reader, big.NewInt(int64(len(b.quotes))))
 	if err != nil {
-		return nil, err
+		return nil, fmt.Errorf("random quote getting err: %w", err)
 	}
 	return []byte(b.quotes[n.Int64()]), nil
 }

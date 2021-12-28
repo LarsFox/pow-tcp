@@ -33,7 +33,7 @@ func NewPOWServer(book *quotes.Book, validator validator) *POWServer {
 
 // Listen listens on TCP network.
 func (s *POWServer) Listen(addr string) {
-	http.ListenAndServe(addr, http.HandlerFunc(s.handle))
+	log.Fatal(http.ListenAndServe(addr, http.HandlerFunc(s.handle)))
 }
 
 // TODO: get proper IP.

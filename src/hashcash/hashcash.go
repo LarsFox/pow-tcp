@@ -52,7 +52,7 @@ func Split(s string) []string {
 func (h *Hashcash) Challenge(ip string) (string, error) {
 	b := make([]byte, hashcashRandomBytes)
 	if _, err := rand.Read(b); err != nil {
-		return "", err
+		return "", fmt.Errorf("hashcash new challenge err: %w", err)
 	}
 
 	random := base64.StdEncoding.EncodeToString(b)

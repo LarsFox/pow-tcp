@@ -23,6 +23,9 @@ docker-run:
 docker-stop:
 	@docker-compose stop
 
+lint:
+	@golangci-lint run
+
 mocks:
 	@echo "Generating mocks..."
 	@go generate ./src/...

@@ -41,6 +41,7 @@ func TestSolveChallenge(t *testing.T) {
 
 	// Solving the challenge.
 	req, err := http.NewRequest(http.MethodGet, server.URL, nil)
+	assert.NoError(t, err)
 	req.Header.Add("X-Hashcash", solution)
 	validator.EXPECT().Validate(solution).Return(true)
 
@@ -68,6 +69,7 @@ func TestFailChallenge(t *testing.T) {
 	validator.EXPECT().Challenge(gomock.Any()).Return(challenge, nil)
 	resp, err := http.Get(server.URL)
 	assert.NoError(t, err)
+	defer resp.Body.Close()
 
 	assert.Equal(t, http.StatusOK, resp.StatusCode)
 	xchallenge := resp.Header.Get("X-Hashcash")
@@ -75,6 +77,7 @@ func TestFailChallenge(t *testing.T) {
 
 	// Failing the challenge.
 	req, err := http.NewRequest(http.MethodGet, server.URL, nil)
+	assert.NoError(t, err)
 	req.Header.Add("X-Hashcash", "WRONG_SOLUTION")
 	validator.EXPECT().Validate("WRONG_SOLUTION").Return(false)
 

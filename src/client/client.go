@@ -26,6 +26,7 @@ func (c *Client) Quote() {
 	if err != nil {
 		log.Fatal("get challenge err:", err)
 	}
+	defer resp.Body.Close()
 
 	if resp.StatusCode != http.StatusOK {
 		log.Fatal("get challenge not ok:", resp.StatusCode)
@@ -45,6 +46,10 @@ func (c *Client) Quote() {
 	// Checking the solution.
 	solution := hashcash.New(bits).Solve(challenge)
 	req, err := http.NewRequest(http.MethodGet, c.addr, nil)
+	if err != nil {
+		log.Fatal("new request err:", err)
+	}
+
 	req.Header.Add("X-Hashcash", solution)
 
 	respSolve, err := http.DefaultClient.Do(req)
